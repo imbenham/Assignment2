@@ -14,6 +14,17 @@ func willOverflow(firstNumber: Int, secondNumber: Int)->Bool {
     
 }
 
+func checkForDecimal(aString: NSString)->Bool{
+    let aDouble = aString.doubleValue
+    let anInt = aString.intValue
+    
+    if aDouble != Double(anInt){
+        return true
+    }
+    
+    return false
+}
+
 class FourthViewController: UIViewController {
     
     @IBOutlet weak var numberField: UITextField!
@@ -58,6 +69,12 @@ class FourthViewController: UIViewController {
     
     @IBAction func getFibonacciNumberX(sender: AnyObject) {
         let indexString = numberField.text as NSString
+        if checkForDecimal(indexString){
+            labelText = "Give me a positive integer, please!"
+            updateInterface()
+            return
+        }
+        
         let index = Int(indexString.intValue)
         
         let returnTuple = FibonacciAdder().fibonacciNumberAtIndex(index)
@@ -74,6 +91,5 @@ class FourthViewController: UIViewController {
         messageLabel.text = labelText
         numberField.text = ""
     }
-    
-    
+
 }

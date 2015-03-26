@@ -17,11 +17,17 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var summandField: UITextField!
     
     @IBAction func refreshSum(sender: AnyObject) {
-    let summand = Int((summandField.text as NSString).intValue)
+        let myString = summandField.text as NSString
+        let summand = Int((myString).intValue)
         
-        // willOverflow is a public function defined in FourthViewController.swift to facilitate handling of Int overflows caused by user
+        // willOverflow is a function defined in FourthViewController.swift to facilitate handling of Int overflows caused by user.  checkForDecimal is defined below willOVerflow and makes sure the user has provided a whole number
         if willOverflow(totalSum, summand) {
             totalLabel.text = "Value has gotten too big!"
+            summandField.text = ""
+            return
+        } else if checkForDecimal(myString){
+            totalLabel.text = "I only add integers!"
+            summandField.text = ""
             return
         }
         totalSum += summand
