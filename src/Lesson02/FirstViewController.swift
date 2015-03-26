@@ -14,6 +14,8 @@ class FirstViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var ageField: UITextField!
     @IBOutlet weak var greetingLabel: UILabel!
+    @IBOutlet weak var userGreetingLabel: UILabel!
+    @IBOutlet weak var synthesizedAgePermissions: UILabel!
     
        // TODO one: hook up a button in interface builder to a new function (to be written) in this class. Also hook up the label to this class. When the button is clicked, the function to be written must make a label say ‘hello world!’
     @IBAction func generalHello(sender: AnyObject) {
@@ -26,7 +28,13 @@ class FirstViewController: UIViewController {
         let name = nameField.text
         let age = ageField.text
         
-        println("Hello \(name), you are \(age) years old!")
+        if let userAge = age.toInt(){
+            userGreetingLabel.text = "Hello \(name), you are \(age) years old!"
+        } else {
+            userGreetingLabel.text = "Hello \(name), your age should be a number!"
+        }
+        
+        
     }
     
     // TODO three: Hook up the button to a NEW function (in addition to the two above). Print “You can drink” below the above text if the user is above 21. If they are above 18, print “you can vote”. If they are above 16, print “You can drive”
@@ -54,15 +62,19 @@ class FirstViewController: UIViewController {
         let youCan18 = youCan16 + " and vote"
         let youCan21 = youCan16 + ", vote and drink (but not at the same time!)"
         
+        // not handling case of non-numeric value in age field because self.userGreeting will handle error message and none of the below lines will execute 
         let age = ageField.text as NSString
         let intValue = age.intValue
         
         if intValue >= 21 {
-            println(youCan21)
+            synthesizedAgePermissions.text = youCan21
         } else if intValue >= 18 {
-            println(youCan18)
+            synthesizedAgePermissions.text = youCan18
         } else if intValue >= 16 {
-            println(youCan16)
+            synthesizedAgePermissions.text = youCan16
+        } else {
+            synthesizedAgePermissions.text = ""
         }
+        
     }
 }

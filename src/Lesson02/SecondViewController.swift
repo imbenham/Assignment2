@@ -9,7 +9,7 @@
 import UIKit
 
 class SecondViewController: UIViewController {
-    var totalSum:Int32 = 0
+    var totalSum:Int = 0
 
     //TODO five: Display the cumulative sum of all numbers added every time the ‘add’ button is pressed. Hook up the label, text box and button to make this work.
     
@@ -17,7 +17,13 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var summandField: UITextField!
     
     @IBAction func refreshSum(sender: AnyObject) {
-    let summand = (summandField.text as NSString).intValue
+    let summand = Int((summandField.text as NSString).intValue)
+        
+        // willOverflow is a public function defined in FourthViewController.swift to facilitate handling of Int overflows caused by user
+        if willOverflow(totalSum, summand) {
+            totalLabel.text = "Value has gotten too big!"
+            return
+        }
         totalSum += summand
         
         self.updateInterface()

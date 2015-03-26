@@ -21,15 +21,21 @@ class ThirdViewController: UIViewController {
     
     
     @IBAction func updateIsEven(sender: AnyObject) {
-        let numString = numberField.text as NSString
-        let intValue = numString.intValue
-        isEven = (intValue % 2 == 0) ? true : false
+        let numString = numberField.text
+        let intValue = numString.toInt()
         
+        if intValue == nil {
+            messageLabel.text = "Provide an integer!"
+            numberField.text = ""
+            return
+        }
+        
+        isEven = (intValue! % 2 == 0) ? true : false
         updateInterface()
     }
     
     func updateInterface() {
-        let numString = numberField.text as NSString
+        let numString = numberField.text as String
         messageLabel.text = isEven ? "The number \(numString) is even." : "The number \(numString) is odd."
         numberField.text = ""
     }
